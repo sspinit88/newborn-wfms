@@ -1,0 +1,48 @@
+<form class="card-content"
+      id="form"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()">
+  <span class="card-title">Создать аккаунт</span>
+  <div class="input-field">
+    <input id="email"
+           type="email"
+           formControlName="email">
+    <label for="email">Email:</label>
+    <span class="helper-text"
+          [ngClass]="toggleError()"
+          *ngIf="form.get('email').invalid && form.get('email').touched">
+        <span *ngIf="form.get('email')['errors']['required']">
+          Поле должно быть заполненно!
+        </span>
+        <span *ngIf="form.get('email')['errors']['email']">
+          Поле заполненно некорректно!
+        </span>
+    </span>
+  </div>
+  <div class="input-field">
+    <input id="password"
+           type="password"
+           formControlName="password">
+    <label for="password">Пароль:</label>
+    <span class="helper-text"
+          [ngClass]="toggleErrorPas()"
+          *ngIf="form.get('password').invalid && form.get('password').touched">
+        <span *ngIf="form.get('password')['errors']['required']">
+          Поле должно быть заполненно!
+        </span>
+        <span *ngIf="form.get('password')['errors']['minlength']">
+          Поле заполненно некорректно!<br>
+          Введено символов: {{form.get('password')['errors']['minlength']['actualLength']}}.<br>
+          Должно быть введено: {{form.get('password')['errors']['minlength']['requiredLength']}} символов.
+        </span>
+    </span>
+  </div>
+</form>
+<div class="card-action">
+  <button class="modal-action btn waves-effect"
+          [disabled]="form.invalid || form.disabled"
+          form="form">
+    Создать
+  </button>
+</div>
+
